@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:20px; background:var(--paper); font-family:var(--font-ui); }
+  .frame { background:var(--code-bg); border:1px solid var(--rule); border-radius:var(--r-4); padding:14px 16px; box-shadow: var(--shadow-1); }
+  pre { margin:0; }
+  .ln { display:inline-block; width:24px; color:var(--code-line-num); user-select:none; text-align:right; padding-right:12px; }
+  .ln.active { color:var(--code-line-num-active); }
+  .kw { color:var(--code-keyword); }
+  .ty { color:var(--code-type); }
+  .fn { color:var(--code-fn); }
+  .st { color:var(--code-string); }
+  .nm { color:var(--code-number); }
+  .pn { color:var(--code-punct); }
+  .cm { color:var(--code-comment); font-style:italic; }
+  .yi { color:var(--code-yield); font-weight:700; }
+  .row { background: var(--selected-bg); border-left: 3px solid var(--selected-line); margin-left:-16px; padding-left:13px; }
+</style></head>
+<body>
+<div class="frame">
+<pre class="code"><span class="ln">1</span><span class="cm">// Effect.gen : suite d'étapes</span>
+<span class="ln">2</span><span class="kw">return</span> Effect.<span class="fn">gen</span>(<span class="kw">function</span>* () <span class="pn">{</span>
+<span class="row"><span class="ln active">3</span>  <span class="kw">const</span> services = <span class="yi">yield*</span> <span class="fn">loadRecapServices</span>();</span>
+<span class="ln">4</span>  <span class="kw">const</span> state = <span class="yi">yield*</span> services.stateManager.<span class="fn">load</span>();
+<span class="ln">5</span>  <span class="pn">}</span>);</pre>
+</div>
+</body></html>

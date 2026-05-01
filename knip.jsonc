@@ -1,0 +1,20 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "workspaces": {
+    ".": {
+      "entry": ["scripts/**/*.ts", ".claude/hooks/**/*.ts", ".codex/hooks/**/*.ts"],
+      "project": ["scripts/**/*.ts", ".claude/hooks/**/*.ts", ".codex/hooks/**/*.ts"],
+    },
+    "apps/frontend": {
+      "entry": [
+        "src/main.tsx",
+        "src/routes/**/*.{ts,tsx}",
+        "src/**/*.{test,spec}.{ts,tsx}",
+        "e2e/**/*.ts",
+        "playwright.config.ts",
+        "vite.config.ts",
+      ],
+      "project": ["src/**/*.{ts,tsx}", "e2e/**/*.ts", "playwright.config.ts", "vite.config.ts"],
+    },
+  },
+}

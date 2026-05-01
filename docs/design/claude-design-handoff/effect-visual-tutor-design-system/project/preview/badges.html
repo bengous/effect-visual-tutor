@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:24px; background:var(--paper); font-family:var(--font-ui); display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
+  .badge { display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:var(--r-pill); font-family:var(--font-ui); font-size:11px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; border:1px solid; }
+  .b-success { background:var(--success-bg); color:var(--success-fg); border-color:var(--success-line); }
+  .b-error   { background:var(--error-bg);   color:var(--error-fg);   border-color:var(--error-line); }
+  .b-req     { background:var(--req-bg);     color:var(--req-fg);     border-color:var(--req-line); }
+  .b-priv    { background:var(--private-bg); color:var(--private-fg); border-color:var(--private-line); background-image: var(--private-hatch); }
+  .b-pub     { background:var(--public-bg);  color:var(--public-fg);  border-color:var(--public-line); }
+  .b-prep    { background:var(--prepared-bg);color:var(--prepared-fg);border-color:var(--prepared-line); }
+  .b-exec    { background:var(--exec-bg);    color:var(--exec-fg);    border-color:var(--exec-line); box-shadow: 0 0 0 3px var(--exec-glow); }
+  .dot { width:6px; height:6px; border-radius:50%; background:currentColor; }
+  .ring { width:8px; height:8px; border-radius:50%; border:1.5px solid currentColor; background:transparent; }
+</style></head>
+<body>
+  <span class="badge b-success"><span class="dot"></span>Réussite</span>
+  <span class="badge b-error"><span class="dot"></span>Erreur</span>
+  <span class="badge b-req"><span class="ring"></span>Requirements</span>
+  <span class="badge b-priv">Privé</span>
+  <span class="badge b-pub">API publique</span>
+  <span class="badge b-prep"><span class="ring"></span>Armé</span>
+  <span class="badge b-exec"><span class="dot"></span>En cours</span>
+</body></html>

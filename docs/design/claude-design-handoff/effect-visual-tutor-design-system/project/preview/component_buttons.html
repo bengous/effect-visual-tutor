@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:24px; background:var(--paper); font-family:var(--font-ui); display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+  .btn { display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:var(--r-3); font-family:var(--font-ui); font-size:13px; font-weight:500; border:1px solid var(--rule); background:var(--surface-1); color:var(--ink); cursor:pointer; }
+  .btn:hover { background:var(--surface-2); }
+  .btn.primary { background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  .btn.primary:hover { background:var(--ink-2); }
+  .btn.ghost { background:transparent; border-color:transparent; color:var(--ink-2); }
+  .btn.ghost:hover { color:var(--ink); background:var(--surface-2); }
+  .btn.exec { background:var(--exec-bg); color:var(--exec-fg); border-color:var(--exec-line); box-shadow:0 0 0 3px var(--exec-glow); }
+  .toggle { display:inline-flex; background:var(--surface-2); border:1px solid var(--rule); border-radius:var(--r-3); padding:2px; }
+  .toggle button { background:transparent; border:none; padding:5px 12px; font-family:var(--font-ui); font-size:12px; color:var(--ink-2); border-radius:var(--r-2); cursor:pointer; }
+  .toggle button.on { background:var(--surface-1); color:var(--ink); box-shadow:var(--shadow-1); }
+</style></head>
+<body>
+  <button class="btn primary">Étape suivante →</button>
+  <button class="btn">← Précédent</button>
+  <button class="btn ghost">Voir la signature</button>
+  <button class="btn exec">▶ Exécuter</button>
+  <div class="toggle"><button class="on">Simple</button><button>Détail</button></div>
+</body></html>

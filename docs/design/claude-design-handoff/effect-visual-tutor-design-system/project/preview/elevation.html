@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:24px; background:var(--paper); font-family:var(--font-ui); display:flex; gap:24px; }
+  .card { background:var(--surface-1); border:1px solid var(--rule); border-radius:var(--r-4); padding:18px 20px; min-width:130px; text-align:center; }
+  .lbl { font-family:var(--font-mono); font-size:10px; color:var(--ink-3); display:block; margin-top:8px; }
+  .name { color:var(--ink); font-weight:600; font-size:13px; }
+  .s1 { box-shadow: var(--shadow-1); }
+  .s2 { box-shadow: var(--shadow-2); }
+  .s3 { box-shadow: var(--shadow-3); }
+  .glow { box-shadow: 0 0 0 4px var(--exec-glow); border-color:var(--exec-line); }
+</style></head>
+<body>
+  <div class="card s1"><span class="name">shadow-1</span><span class="lbl">cards · default</span></div>
+  <div class="card s2"><span class="name">shadow-2</span><span class="lbl">popovers</span></div>
+  <div class="card s3"><span class="name">shadow-3</span><span class="lbl">modals only</span></div>
+  <div class="card glow"><span class="name">exec-glow</span><span class="lbl">execution state</span></div>
+</body></html>

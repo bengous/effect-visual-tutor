@@ -1,0 +1,16 @@
+{
+  "absolute": false,
+  "gitignore": true,
+  "ignore": [
+    "**/*.test.ts",
+    "**/*.e2e.test.ts",
+    "**/AGENTS.md",
+    "**/skills/**",
+    ".agents/**",
+    ".claude/**"
+  ],
+  "minLines": 20,
+  "minTokens": 100,
+  "reporters": ["console"],
+  "threshold": 2
+}

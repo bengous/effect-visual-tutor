@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:18px; background:var(--paper); font-family:var(--font-ui); display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .card { background:var(--surface-1); border:1px solid var(--rule); border-radius:var(--r-4); padding:14px 16px; box-shadow:var(--shadow-1); }
+  .eyebrow { font-family:var(--font-ui); font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); margin-bottom:6px; }
+  .eyebrow code { font-family:var(--font-mono); font-size:12px; background:var(--surface-2); padding:1px 5px; border-radius:var(--r-2); color:var(--ink); margin-right:6px; letter-spacing:0; text-transform:none; }
+  .title { font-family:var(--font-prose); font-weight:500; font-size:18px; line-height:1.3; margin:0 0 6px 0; color:var(--ink); }
+  .body { font-family:var(--font-prose); font-size:14px; line-height:1.55; color:var(--ink-2); margin:0; }
+  .toggle { margin-top:10px; display:inline-flex; align-items:center; gap:6px; font-family:var(--font-ui); font-size:12px; color:var(--ink-3); cursor:pointer; }
+  .toggle .chev { width:10px; height:10px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:rotate(-45deg); display:inline-block; }
+  .open .chev { transform:rotate(45deg); }
+  .detail { margin-top:10px; padding-top:10px; border-top:1px dashed var(--rule); font-family:var(--font-mono); font-size:12px; color:var(--ink-2); line-height:1.7; }
+</style></head>
+<body>
+<div class="card">
+  <div class="eyebrow"><code>yield*</code>DÉROULER UNE ÉTAPE</div>
+  <h3 class="title">Lance l'étape, puis te donne ce qu'elle a produit.</h3>
+  <p class="body"><code class="code-inline">yield*</code> attend que la sous-étape se termine, et renvoie sa valeur de succès.</p>
+  <span class="toggle"><span class="chev"></span>Voir la signature</span>
+</div>
+<div class="card">
+  <div class="eyebrow"><code>yield*</code>DÉROULER UNE ÉTAPE</div>
+  <h3 class="title">Lance l'étape, puis te donne ce qu'elle a produit.</h3>
+  <p class="body"><code class="code-inline">yield*</code> attend que la sous-étape se termine, et renvoie sa valeur de succès.</p>
+  <span class="toggle open"><span class="chev"></span>Masquer le détail</span>
+  <div class="detail">yield*&nbsp;e&nbsp;:&nbsp;Effect&lt;A,&nbsp;E,&nbsp;R&gt;<br/>→ A &nbsp;<span style="color:var(--ink-3)">// le succès remonte</span></div>
+</div>
+</body></html>

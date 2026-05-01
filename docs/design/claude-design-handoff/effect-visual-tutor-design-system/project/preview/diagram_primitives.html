@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:18px; background:var(--paper); font-family:var(--font-ui); }
+  .grid { display:grid; grid-template-columns: 1fr 1fr; gap:14px; align-items:start; }
+  .cell { background:var(--surface-1); border:1px solid var(--rule); border-radius:var(--r-3); padding:12px; }
+  .lbl { font-family:var(--font-mono); font-size:10px; color:var(--ink-3); letter-spacing:.06em; text-transform:uppercase; margin-bottom:8px; }
+  svg { display:block; width:100%; height:auto; overflow:visible; font-family:var(--font-mono); }
+  .cap-fill { fill:var(--public-bg); stroke:var(--public-line); }
+  .cap-text { fill:var(--public-fg); font-size:11px; font-weight:600; }
+  .slot-success { fill:var(--success-bg); stroke:var(--success-line); }
+  .slot-error   { fill:var(--error-bg);   stroke:var(--error-line); }
+  .slot-req     { fill:var(--req-bg);     stroke:var(--req-line); }
+  .slot-text    { font-size:9px; font-weight:600; fill:var(--ink-2); }
+  .ring-empty { fill:transparent; stroke:var(--req-line); stroke-width:1.5; }
+  .ring-filled { fill:var(--req-bg); stroke:var(--req-line); stroke-width:1.5; }
+  .ring-text { font-size:10px; fill:var(--req-fg); font-weight:600; }
+  .arrow { stroke:var(--ink-2); stroke-width:1.5; fill:none; marker-end:url(#h); }
+  .frame-pub { fill:var(--public-bg); stroke:var(--public-line); stroke-width:1.5; }
+  .frame-priv-bg { fill:var(--private-bg); stroke:var(--private-line); stroke-width:1.5; stroke-dasharray:4 3; }
+</style></head>
+<body>
+<div class="grid">
+  <div class="cell">
+    <div class="lbl">Capsule — un Effect</div>
+    <svg viewBox="0 0 320 80">
+      <rect x="2" y="14" width="316" height="52" rx="26" class="cap-fill"/>
+      <text x="20" y="44" class="cap-text">Effect.gen</text>
+      <rect x="120" y="26" width="52" height="28" rx="6" class="slot-success"/>
+      <text x="146" y="44" text-anchor="middle" class="slot-text">Success</text>
+      <rect x="180" y="26" width="48" height="28" rx="6" class="slot-error"/>
+      <text x="204" y="44" text-anchor="middle" class="slot-text">Error</text>
+      <rect x="236" y="26" width="68" height="28" rx="6" class="slot-req"/>
+      <text x="270" y="44" text-anchor="middle" class="slot-text">Requires</text>
+    </svg>
+  </div>
+  <div class="cell">
+    <div class="lbl">Anneaux — services requis (label dessous)</div>
+    <svg viewBox="0 0 320 80">
+      <circle cx="50"  cy="34" r="14" class="ring-empty"/>
+      <text x="50"  y="60" text-anchor="middle" class="ring-text">services</text>
+      <circle cx="120" cy="34" r="14" class="ring-empty"/>
+      <text x="120" y="60" text-anchor="middle" class="ring-text">state</text>
+      <circle cx="190" cy="34" r="14" class="ring-empty"/>
+      <text x="190" y="60" text-anchor="middle" class="ring-text">clock</text>
+      <text x="240" y="20" font-size="9" fill="var(--ink-3)">vide → rempli</text>
+      <circle cx="260" cy="34" r="14" class="ring-filled"/>
+      <text x="260" y="60" text-anchor="middle" class="ring-text">state</text>
+    </svg>
+  </div>
+  <div class="cell">
+    <div class="lbl">Flèche — un yield* qui se résout</div>
+    <svg viewBox="0 0 320 80">
+      <defs><marker id="h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-2)"/></marker></defs>
+      <rect x="20" y="22" width="80" height="36" rx="8" fill="var(--surface-2)" stroke="var(--rule)"/>
+      <text x="60" y="44" text-anchor="middle" font-size="10" fill="var(--ink-2)">étape</text>
+      <path d="M 100 40 C 150 40, 170 40, 220 40" class="arrow"/>
+      <circle cx="160" cy="40" r="5" fill="var(--success-bg)" stroke="var(--success-line)"/>
+      <rect x="220" y="22" width="80" height="36" rx="8" fill="var(--success-bg)" stroke="var(--success-line)"/>
+      <text x="260" y="44" text-anchor="middle" font-size="10" fill="var(--success-fg)" font-weight="600">valeur</text>
+    </svg>
+  </div>
+  <div class="cell">
+    <div class="lbl">Cadres — public · privé (hachuré)</div>
+    <svg viewBox="0 0 320 80">
+      <pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--private-line)" stroke-width="1" opacity=".4"/></pattern>
+      <rect x="6" y="14" width="140" height="52" rx="8" class="frame-pub"/>
+      <text x="76" y="44" text-anchor="middle" font-size="11" fill="var(--public-fg)" font-weight="600">RecapRunSummary</text>
+      <rect x="174" y="14" width="140" height="52" rx="8" class="frame-priv-bg"/>
+      <rect x="174" y="14" width="140" height="52" rx="8" fill="url(#hatch)" stroke="none"/>
+      <text x="244" y="44" text-anchor="middle" font-size="11" fill="var(--private-fg)" font-weight="600">RecapRunBundle</text>
+    </svg>
+  </div>
+</div>
+</body></html>

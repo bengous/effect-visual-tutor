@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:24px; background:var(--paper); font-family:var(--font-ui); }
+  .wordmark { display:flex; align-items:center; gap:12px; }
+  .glyph { width:54px; height:54px; position:relative; }
+  .glyph svg { display:block; }
+  .name { display:flex; flex-direction:column; gap:2px; }
+  .name .top { font-family:var(--font-prose); font-weight:500; font-size:24px; line-height:1; color:var(--ink); letter-spacing:-.01em; }
+  .name .top em { font-style:normal; color:var(--code-yield); font-family:var(--font-mono); font-weight:700; }
+  .name .sub { font-family:var(--font-mono); font-size:11px; color:var(--ink-3); letter-spacing:.06em; text-transform:uppercase; }
+  .row { display:flex; gap:32px; align-items:center; }
+</style></head>
+<body>
+<div class="row">
+  <div class="wordmark">
+    <div class="glyph">
+      <svg viewBox="0 0 54 54" width="54" height="54">
+        <!-- capsule -->
+        <rect x="2" y="16" width="50" height="22" rx="11" fill="var(--public-bg)" stroke="var(--public-line)" stroke-width="1.5"/>
+        <!-- yield* arrow piercing it -->
+        <path d="M 8 27 L 46 27" stroke="var(--code-yield)" stroke-width="2.5" fill="none" marker-end="url(#mk)"/>
+        <defs><marker id="mk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--code-yield)"/></marker></defs>
+        <!-- success token -->
+        <circle cx="38" cy="27" r="3.5" fill="var(--success-bg)" stroke="var(--success-line)" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div class="name">
+      <div class="top">Effect <em>↦</em> Visual Tutor</div>
+      <div class="sub">Lis le code. Vois la forme.</div>
+    </div>
+  </div>
+</div>
+</body></html>

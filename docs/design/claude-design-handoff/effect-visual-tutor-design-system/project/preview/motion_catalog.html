@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:18px; background:var(--paper); font-family:var(--font-ui); display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
+  .lane { background:var(--surface-1); border:1px solid var(--rule); border-radius:var(--r-3); padding:12px 14px; }
+  .lbl { font-family:var(--font-mono); font-size:10px; color:var(--ink-3); letter-spacing:.06em; text-transform:uppercase; margin-bottom:10px; }
+  .seq { display:flex; gap:8px; align-items:center; }
+  .frame { flex:1; height:64px; border:1px solid var(--rule); border-radius:var(--r-3); position:relative; background:var(--surface-2); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:11px; color:var(--ink-2); overflow:hidden; }
+  .step { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+  .arr { font-family:var(--font-mono); color:var(--ink-3); }
+  .meta { font-family:var(--font-mono); font-size:10px; color:var(--ink-3); margin-top:8px; }
+  .ringPulse { width:30px; height:30px; border-radius:50%; border:3px solid var(--prepared-line); animation: pulse 1.5s var(--ease-in-out) infinite; }
+  @keyframes pulse { 0%,100% { opacity:.4; } 50% { opacity:.9; } }
+  .glow { box-shadow: 0 0 0 4px var(--exec-glow); border-color:var(--exec-line); background:var(--exec-bg); color:var(--exec-fg); }
+  .tok { width:10px; height:10px; border-radius:50%; background:var(--success-bg); border:1.5px solid var(--success-line); animation: travel 1.5s var(--ease-out) infinite; }
+  @keyframes travel { 0% { transform: translateX(-40px); opacity:0; } 20% { opacity:1; } 80% { opacity:1; } 100% { transform: translateX(40px); opacity:0; } }
+</style></head>
+<body>
+<div class="lane">
+  <div class="lbl">3 — yield* RÉSOUT (TOKEN TRAVERSE)</div>
+  <div class="seq">
+    <div class="frame">étape</div>
+    <div class="tok"></div>
+    <div class="frame" style="background:var(--success-bg);color:var(--success-fg);border-color:var(--success-line)">valeur</div>
+  </div>
+  <div class="meta">--dur-step 320ms · --ease-out</div>
+</div>
+<div class="lane">
+  <div class="lbl">5 — PREPARED (PULSE) → EXECUTE (GLOW)</div>
+  <div class="seq">
+    <div class="frame"><div class="ringPulse"></div></div>
+    <span class="arr">→</span>
+    <div class="frame glow">running…</div>
+  </div>
+  <div class="meta">act 1 idle pulse 1.5s · act 2 --dur-quick + --exec-glow</div>
+</div>
+<div class="lane">
+  <div class="lbl">1 — REVEAL SIMPLE → DÉTAIL</div>
+  <div class="seq">
+    <div class="frame">simple</div>
+    <span class="arr">▸</span>
+    <div class="frame" style="height:64px; flex-direction:column; align-items:flex-start; padding:8px 12px; justify-content:flex-start; background:var(--surface-1)">
+      <div style="color:var(--ink)">simple</div>
+      <div style="font-size:10px; color:var(--ink-2); margin-top:4px">+ détail</div>
+    </div>
+  </div>
+  <div class="meta">--dur-reveal 480ms · --ease-out · stagger 60ms</div>
+</div>
+<div class="lane">
+  <div class="lbl">4 — BRANCHE D'ERREUR APPARAÎT</div>
+  <div class="seq">
+    <div class="frame">if invalide</div>
+    <svg width="80" height="50" viewBox="0 0 80 50" style="overflow:visible">
+      <path d="M 0 25 L 70 10" stroke="var(--error-line)" stroke-width="1.6" fill="none" stroke-dasharray="4 3"/>
+      <path d="M 0 25 L 70 40" stroke="var(--ink-3)" stroke-width="1" fill="none" opacity=".4"/>
+    </svg>
+    <div style="display:flex; flex-direction:column; gap:4px">
+      <div class="frame" style="height:24px; padding:0 10px; background:var(--error-bg); color:var(--error-fg); border-color:var(--error-line)">Error</div>
+      <div class="frame" style="height:24px; padding:0 10px; opacity:.4">happy</div>
+    </div>
+  </div>
+  <div class="meta">--dur-branch 600ms · stroke-dashoffset</div>
+</div>
+</body></html>

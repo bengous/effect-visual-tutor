@@ -1,0 +1,53 @@
+{
+  "name": "effect-visual-tutor",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "bun run dev:frontend",
+    "typecheck": "tsc --noEmit --pretty false",
+    "lint": "oxlint -c .oxlintrc.jsonc --format=unix scripts/ .codex/hooks/",
+    "lint:errors": "oxlint -c .oxlintrc.jsonc --quiet --format=unix scripts/ .codex/hooks/",
+    "lint:arch": "dependency-cruiser --config .dependency-cruiser.cjs --output-type err scripts ./.codex/hooks",
+    "lint:dead": "knip --include files,dependencies,unlisted,binaries --reporter compact",
+    "lint:dupes": "jscpd --config .jscpd.json",
+    "format": "oxfmt --write -c .oxfmtrc.jsonc 'scripts/**/*.{ts,tsx,js,jsx,mjs}' '.codex/hooks/**/*.{ts,tsx,js,jsx,mjs}'",
+    "format:check": "oxfmt --check -c .oxfmtrc.jsonc 'scripts/**/*.{ts,tsx,js,jsx,mjs}' '.codex/hooks/**/*.{ts,tsx,js,jsx,mjs}'",
+    "autofix": "oxlint -c .oxlintrc.jsonc --fix scripts/ .codex/hooks/ && oxfmt --write -c .oxfmtrc.jsonc 'scripts/**/*.{ts,tsx,js,jsx,mjs}' '.codex/hooks/**/*.{ts,tsx,js,jsx,mjs}'",
+    "test": "bun run test:unit && bun run test:hooks",
+    "test:unit": "cd apps/frontend && bun run test",
+    "test:hooks": "bun test ./.codex/hooks",
+    "test:e2e": "cd apps/frontend && bunx playwright test",
+    "lint:audit": "bun scripts/quality/audit-oxlint-rules.ts",
+    "check:links": "bun scripts/quality/check-links-local.ts",
+    "agents:sync": "bun scripts/agents/sync-agents-md.ts --write",
+    "agents:check": "bun scripts/agents/sync-agents-md.ts --check",
+    "repo:bootstrap": "bun scripts/setup/bootstrap-git-config.ts",
+    "prepare": "bun scripts/setup/bootstrap-prepare.ts",
+    "dev:frontend": "cd apps/frontend && bun run dev",
+    "typecheck:frontend": "cd apps/frontend && bun run typecheck",
+    "lint:frontend": "cd apps/frontend && bun run lint",
+    "format:check:frontend": "cd apps/frontend && bun run format:check",
+    "lint:arch:frontend": "cd apps/frontend && dependency-cruiser --config .dependency-cruiser.cjs --output-type err src",
+    "lint:css:frontend": "cd apps/frontend && bun run lint:css",
+    "build:frontend": "cd apps/frontend && bun run build",
+    "validate:frontend": "bun run --silent typecheck:frontend && cd apps/frontend && bun run --silent test && cd ../.. && bun run --silent lint:frontend && bun run --silent format:check:frontend && bun run --silent lint:arch:frontend && bun run --silent lint:css:frontend && bun run --silent build:frontend && bun run --silent test:e2e",
+    "validate": "bun scripts/validation/validate.ts",
+    "validate:scale": "bun run --silent validate && bun run --silent lint:dead && bun run --silent lint:arch && bun run --silent lint:dupes && bun run --silent check:links"
+  },
+  "devDependencies": {
+    "@types/bun": "1.3.13",
+    "dependency-cruiser": "17.3.10",
+    "jscpd": "4.0.8",
+    "knip": "6.6.2",
+    "lefthook": "2.1.4",
+    "oxfmt": "0.46.0",
+    "oxlint": "1.61.0",
+    "oxlint-plugin-complexity": "2.0.3",
+    "oxlint-tsgolint": "0.19.0",
+    "typescript": "6.0.2"
+  }
+}

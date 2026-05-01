@@ -1,0 +1,398 @@
+/* ==========================================================================
+   Effect Visual Tutor — Foundations
+   Colors, type, spacing, radii, shadows, motion.
+   These are the only tokens. Components compose them; never invent new values.
+   ========================================================================== */
+
+/* ---- Webfonts -------------------------------------------------------------
+   Geist Sans  — UI / chrome / labels (Vercel; SIL OFL)
+   Newsreader  — editorial prose, French explanation copy (Production Type; OFL)
+   JetBrains Mono — all code, all monospace (JetBrains; OFL)
+   Loaded via Google Fonts CDN. If shipping offline, mirror to /fonts/.
+   -------------------------------------------------------------------------- */
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+:root {
+  /* ====================================================================
+     COLOR — Surfaces (light theme is default; long study sessions)
+     A single neutral ladder. Ink on paper. Restraint over richness.
+     ==================================================================== */
+  --paper:        #FAF8F4;   /* outermost surface — warm off-white */
+  --surface-1:    #FFFFFF;   /* code frames, cards */
+  --surface-2:    #F1EEE7;   /* recessed wells, inactive code background */
+  --surface-3:    #E6E1D7;   /* dividers, subtle fills */
+  --rule:         #D9D3C5;   /* borders */
+  --rule-strong:  #B9B1A0;   /* emphasized borders */
+
+  --ink:          #1A1814;   /* primary text */
+  --ink-2:        #4A463E;   /* secondary text */
+  --ink-3:        #807969;   /* tertiary / metadata */
+  --ink-4:        #B0A998;   /* disabled / placeholder */
+
+  /* ====================================================================
+     COLOR — Semantic roles (the heart of the system)
+     Each role has: -fg (text/stroke), -bg (tint fill), -line (frame stroke).
+     They are tuned to coexist on the SAME page without competing.
+     ==================================================================== */
+
+  /* SUCCESS — the "happy path" return value, resolved yield* */
+  --success-fg:   #2F6B3A;
+  --success-bg:   #E2EFDD;
+  --success-line: #8FB68A;
+
+  /* ERROR — error channel, thrown SessionError, error branch in flow */
+  --error-fg:     #A23021;
+  --error-bg:     #F5DCD6;
+  --error-line:   #D08879;
+
+  /* REQUIREMENTS — services / dependencies the Effect needs from runtime */
+  --req-fg:       #6A4A1F;
+  --req-bg:       #F2E4C8;
+  --req-line:     #C4A76A;
+
+  /* SELECTED — the line the diagram is currently "about" */
+  --selected-fg:  #1F3A6B;
+  --selected-bg:  #DDE6F4;
+  --selected-line:#7A95C2;
+
+  /* INACTIVE — code that has been stepped past, or is not yet relevant */
+  --inactive-fg:  #807969;   /* same as --ink-3 — code dims to tertiary */
+  --inactive-bg:  transparent;
+
+  /* PRIVATE — internal bundle, encapsulated state, "behind the curtain" */
+  --private-fg:   #5A3D6E;
+  --private-bg:   #ECE3F1;
+  --private-line: #A892B5;
+  --private-hatch:repeating-linear-gradient(
+    -45deg,
+    transparent 0 6px,
+    rgba(90,61,110,0.08) 6px 7px
+  );
+
+  /* PUBLIC — the public surface (RecapRunSummary), what callers see */
+  --public-fg:    #1F4F4A;
+  --public-bg:    #DDECE8;
+  --public-line:  #7AA89F;
+
+  /* PREPARED — the armed-but-not-yet-running state */
+  --prepared-fg:  #6A4A1F;   /* same family as requirements; "loaded" */
+  --prepared-bg:  #F8EFD8;
+  --prepared-line:#D4B978;
+
+  /* EXECUTION — actively running */
+  --exec-fg:      #1A1814;
+  --exec-bg:      #FFE9A8;   /* warm, attention-pulling, but not error */
+  --exec-line:    #C99A1F;
+  --exec-glow:    rgba(201,154,31,0.35);
+
+  /* ACCENT — single neutral accent for UI affordances; semantic colors do all heavy lifting */
+  --accent:       #1A1814;   /* ink itself acts as accent */
+  --accent-fg:    #FAF8F4;
+
+  /* ====================================================================
+     CODE TOKEN COLORS — terminal-derived but tuned for paper
+     Used inside <pre> code blocks. These are NOT semantic — semantic
+     overlays sit on top.
+     ==================================================================== */
+  --code-bg:        var(--surface-1);
+  --code-fg:        var(--ink);
+  --code-comment:   #807969;
+  --code-keyword:   #6A2E8A;   /* function, return, if, const */
+  --code-type:      #1F4F4A;   /* Effect, RunRecapInput, types */
+  --code-fn:        #1F3A6B;   /* function names */
+  --code-string:    #2F6B3A;
+  --code-number:    #A23021;
+  --code-punct:     #4A463E;
+  --code-prop:      #1A1814;
+  --code-yield:     #6A2E8A;   /* yield* gets its own treatment */
+  --code-line-num:  #B0A998;
+  --code-line-num-active: #1A1814;
+
+  /* ====================================================================
+     TYPOGRAPHY
+     Three families. No more.
+       --font-ui    : Geist        — labels, buttons, navigation
+       --font-prose : Newsreader   — French explanation copy, headings
+       --font-mono  : JetBrains    — all code
+     ==================================================================== */
+  --font-ui:    "Geist", "Inter", system-ui, -apple-system, sans-serif;
+  --font-prose: "Newsreader", "Source Serif Pro", Georgia, serif;
+  --font-mono:  "JetBrains Mono", "SF Mono", "Menlo", monospace;
+
+  /* Type scale — modular, anchored to 16px. Optimized for dense reading. */
+  --t-micro:      11px;   /* metadata, line numbers */
+  --t-caption:    12px;
+  --t-ui:         13px;   /* default UI text */
+  --t-ui-lg:      14px;
+  --t-body:       16px;   /* default prose */
+  --t-body-lg:    18px;   /* lesson explanation body */
+  --t-h4:         20px;
+  --t-h3:         24px;
+  --t-h2:         32px;
+  --t-h1:         44px;
+  --t-display:    56px;
+
+  /* Code sizes — slightly larger than UI; legibility priority */
+  --t-code-sm:    13px;
+  --t-code:       15px;   /* default code */
+  --t-code-lg:    17px;   /* feature code in focus mode */
+
+  /* Line heights */
+  --lh-tight:     1.15;
+  --lh-snug:      1.30;
+  --lh-normal:    1.50;
+  --lh-prose:     1.65;   /* French explanation — generous */
+  --lh-code:      1.65;   /* code — generous; ascenders/descenders breathe */
+
+  /* Letter spacing */
+  --ls-tight:     -0.015em;
+  --ls-normal:    0;
+  --ls-wide:      0.04em;
+  --ls-caps:      0.08em;   /* eyebrow labels */
+
+  /* ====================================================================
+     SPACING — 4px base. Dense interface; small steps matter.
+     ==================================================================== */
+  --s-0:   0;
+  --s-1:   2px;
+  --s-2:   4px;
+  --s-3:   8px;
+  --s-4:   12px;
+  --s-5:   16px;
+  --s-6:   20px;
+  --s-7:   24px;
+  --s-8:   32px;
+  --s-9:   40px;
+  --s-10:  48px;
+  --s-11:  64px;
+  --s-12:  80px;
+  --s-13:  96px;
+
+  /* Layout grid — split-view rails */
+  --rail-min:     360px;   /* min width of code or diagram column */
+  --rail-pref:    560px;
+  --gutter:       24px;
+  --page-pad:     32px;
+
+  /* ====================================================================
+     RADII — restrained. Code frames are square-shouldered.
+     ==================================================================== */
+  --r-0:  0;
+  --r-1:  2px;
+  --r-2:  4px;
+  --r-3:  6px;     /* default — buttons, chips, code highlight */
+  --r-4:  10px;    /* cards, frames */
+  --r-5:  14px;    /* large surfaces */
+  --r-pill: 999px;
+
+  /* ====================================================================
+     ELEVATION — low, ink-tinted. Paper, not glass.
+     ==================================================================== */
+  --shadow-0: none;
+  --shadow-1: 0 1px 0 rgba(26,24,20,0.04), 0 1px 2px rgba(26,24,20,0.06);
+  --shadow-2: 0 1px 0 rgba(26,24,20,0.04), 0 4px 12px rgba(26,24,20,0.07);
+  --shadow-3: 0 2px 0 rgba(26,24,20,0.04), 0 12px 28px rgba(26,24,20,0.10);
+  --inset-1:  inset 0 1px 0 rgba(255,255,255,0.6);
+
+  /* Focus ring — accessibility */
+  --ring:     0 0 0 2px var(--paper), 0 0 0 4px var(--ink);
+
+  /* ====================================================================
+     MOTION — durations and easings.
+     Animations have JOBS. Each job has a fixed duration in this system.
+     See MOTION.md for the catalog.
+     ==================================================================== */
+  --dur-instant:  80ms;     /* affordance feedback (hover, press) */
+  --dur-quick:    160ms;    /* small UI transitions */
+  --dur-step:     320ms;    /* one yield* step resolving */
+  --dur-reveal:   480ms;    /* simple → detail disclosure */
+  --dur-flow:     720ms;    /* arrow traversal in a diagram */
+  --dur-branch:   600ms;    /* error branch appearing */
+
+  /* Easings — three only */
+  --ease-out:     cubic-bezier(0.22, 0.61, 0.36, 1);    /* default reveal */
+  --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);       /* state changes */
+  --ease-bounce:  cubic-bezier(0.34, 1.56, 0.64, 1);    /* RARE — only for "armed" */
+
+  /* Stagger increment for sequential reveals */
+  --stagger:      60ms;
+}
+
+/* ============================================================================
+   DARK THEME — opt-in via [data-theme="dark"] on <html>
+   Same semantic intent; surfaces and inks invert; semantic colors shift.
+   ============================================================================ */
+[data-theme="dark"] {
+  --paper:        #16140F;
+  --surface-1:    #1E1B15;
+  --surface-2:    #26221B;
+  --surface-3:    #2F2A21;
+  --rule:         #38322A;
+  --rule-strong:  #524A3D;
+
+  --ink:          #F1ECDF;
+  --ink-2:        #C8C0AD;
+  --ink-3:        #8C8472;
+  --ink-4:        #5C5648;
+
+  --success-fg:   #9CC894;   --success-bg:   #1E2D1C;   --success-line: #4A6B47;
+  --error-fg:     #E89687;   --error-bg:     #2F1A16;   --error-line:   #8A4A3F;
+  --req-fg:       #D9B97A;   --req-bg:       #2C2517;   --req-line:     #7A6433;
+  --selected-fg:  #A8BFE0;   --selected-bg:  #1A2238;   --selected-line:#4A5E85;
+  --private-fg:   #C5A9D2;   --private-bg:   #251D2C;   --private-line: #6A547A;
+  --public-fg:    #9CC8BE;   --public-bg:    #18272A;   --public-line:  #4A7068;
+  --prepared-fg:  #D9B97A;   --prepared-bg:  #2C2417;   --prepared-line:#8A6C2A;
+  --exec-fg:      #F1ECDF;   --exec-bg:      #4A3A0F;   --exec-line:    #C99A1F;
+
+  --code-bg:        #1A1812;
+  --code-fg:        #F1ECDF;
+  --code-comment:   #8C8472;
+  --code-keyword:   #C49AD8;
+  --code-type:      #9CC8BE;
+  --code-fn:        #A8BFE0;
+  --code-string:    #9CC894;
+  --code-number:    #E89687;
+  --code-punct:     #C8C0AD;
+  --code-prop:      #F1ECDF;
+  --code-yield:     #C49AD8;
+
+  --shadow-1: 0 1px 0 rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.5);
+  --shadow-2: 0 1px 0 rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.45);
+  --shadow-3: 0 2px 0 rgba(0,0,0,0.4), 0 12px 28px rgba(0,0,0,0.6);
+  --inset-1:  inset 0 1px 0 rgba(255,255,255,0.04);
+
+  --ring: 0 0 0 2px var(--paper), 0 0 0 4px var(--ink);
+}
+
+/* ============================================================================
+   SEMANTIC TYPE CLASSES — use these names in components.
+   Components should reference .h1, .body-prose, .code etc — NOT raw vars.
+   ============================================================================ */
+
+.display {
+  font-family: var(--font-prose);
+  font-weight: 500;
+  font-size: var(--t-display);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--ink);
+}
+.h1 {
+  font-family: var(--font-prose);
+  font-weight: 500;
+  font-size: var(--t-h1);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--ink);
+}
+.h2 {
+  font-family: var(--font-prose);
+  font-weight: 500;
+  font-size: var(--t-h2);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  color: var(--ink);
+}
+.h3 {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--t-h3);
+  line-height: var(--lh-snug);
+  color: var(--ink);
+}
+.h4 {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--t-h4);
+  line-height: var(--lh-snug);
+  color: var(--ink);
+}
+.eyebrow {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--t-micro);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-caps);
+  color: var(--ink-3);
+}
+.body-prose {
+  font-family: var(--font-prose);
+  font-weight: 400;
+  font-size: var(--t-body-lg);
+  line-height: var(--lh-prose);
+  color: var(--ink);
+}
+.body-ui {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: var(--t-ui);
+  line-height: var(--lh-normal);
+  color: var(--ink-2);
+}
+.caption {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: var(--t-caption);
+  line-height: var(--lh-normal);
+  color: var(--ink-3);
+}
+.code {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: var(--t-code);
+  line-height: var(--lh-code);
+  font-feature-settings: "liga" 0, "calt" 0;   /* no ligatures — pedagogy */
+  color: var(--code-fg);
+}
+.code-sm {
+  font-family: var(--font-mono);
+  font-size: var(--t-code-sm);
+  line-height: var(--lh-code);
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+.code-inline {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  font-feature-settings: "liga" 0, "calt" 0;
+  background: var(--surface-2);
+  color: var(--ink);
+  padding: 0.08em 0.36em;
+  border-radius: var(--r-2);
+}
+
+/* ============================================================================
+   MOTION — global rules
+   ============================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Reduced-motion replacement: instant state changes, no traversal animations.
+     Diagram arrow traversals become instant; revealed elements appear at final
+     state with no movement. Color/opacity changes are kept (they convey state). */
+}
+
+/* ============================================================================
+   BASE
+   ============================================================================ */
+html, body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: var(--t-ui);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+* { box-sizing: border-box; }
+::selection { background: var(--selected-bg); color: var(--selected-fg); }
+
+/* Focus — always visible, never removed */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: var(--r-2);
+}

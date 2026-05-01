@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:20px; background:var(--paper); font-family:var(--font-ui); }
+  pre { margin:0; padding:14px 16px; background:var(--code-bg); border:1px solid var(--rule); border-radius:var(--r-4); font-family:var(--font-mono); font-size:13px; line-height:1.7; }
+  .ln { display:inline-block; width:22px; color:var(--code-line-num); text-align:right; padding-right:12px; user-select:none; }
+  .row { display:block; margin:0 -16px; padding:0 13px; }
+  .row.sel  { background: var(--selected-bg); border-left:3px solid var(--selected-line); }
+  .row.suc  { background: var(--success-bg);  border-left:3px solid var(--success-line); }
+  .row.err  { background: var(--error-bg);    border-left:3px solid var(--error-line); }
+  .row.req  { background: var(--req-bg);      border-left:3px solid var(--req-line); }
+  .row.inact{ opacity:.45; }
+  .kw { color:var(--code-keyword); } .fn { color:var(--code-fn); } .yi { color:var(--code-yield); font-weight:700; }
+  .pn { color:var(--code-punct); } .ty { color:var(--code-type); } .st { color:var(--code-string); }
+</style></head>
+<body>
+<pre><span class="row inact"><span class="ln">9</span>  <span class="kw">if</span> (input.noAi &amp;&amp; input.rebuildToday) <span class="pn">{</span></span>
+<span class="row err"><span class="ln">10</span>    <span class="kw">return</span> <span class="yi">yield*</span> <span class="kw">new</span> <span class="ty">SessionError</span>(<span class="pn">{</span> kind: <span class="st">"detection_failed"</span> <span class="pn">}</span>);</span>
+<span class="row req"><span class="ln">11</span>  <span class="pn">}</span> <span class="kw">const</span> ctx = <span class="yi">yield*</span> <span class="fn">detectRunContext</span>(state, …);</span>
+<span class="row suc"><span class="ln">12</span>  <span class="kw">return</span> <span class="pn">{</span> runId, summary, execute <span class="pn">}</span>;</span>
+<span class="row sel"><span class="ln">13</span>  <span class="pn">}</span>);</span></pre>
+</body></html>

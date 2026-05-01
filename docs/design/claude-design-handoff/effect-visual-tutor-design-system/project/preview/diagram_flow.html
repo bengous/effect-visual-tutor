@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:18px; background:var(--paper); font-family:var(--font-ui); }
+  svg { display:block; width:100%; height:auto; overflow:visible; }
+  .lbl { font-family:var(--font-mono); font-size:11px; fill:var(--ink); }
+  .small { font-size:9px; fill:var(--ink-3); font-weight:600; letter-spacing:.06em; text-transform:uppercase; }
+  .step { fill:var(--surface-1); stroke:var(--rule); }
+  .step.done { fill:var(--success-bg); stroke:var(--success-line); }
+  .step.active { fill:var(--selected-bg); stroke:var(--selected-line); stroke-width:2; }
+  .arr { stroke:var(--ink-2); stroke-width:1.5; fill:none; marker-end:url(#a); }
+  .arr.partial { stroke:var(--success-line); stroke-dasharray: 60 200; }
+  .arr.err { stroke:var(--error-line); fill:none; marker-end:url(#ae); }
+  .err-cap { fill:var(--error-bg); stroke:var(--error-line); }
+</style></head>
+<body>
+<svg viewBox="0 0 660 220">
+  <defs>
+    <marker id="a"  viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-2)"/></marker>
+    <marker id="ae" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--error-line)"/></marker>
+  </defs>
+  <text x="0" y="14" class="small">FLUX — yield* enchaîne les étapes</text>
+
+  <rect x="10"  y="40"  width="120" height="40" rx="6" class="step done"/>
+  <text x="70" y="64" text-anchor="middle" class="lbl">loadServices</text>
+
+  <rect x="160" y="40"  width="120" height="40" rx="6" class="step done"/>
+  <text x="220" y="64" text-anchor="middle" class="lbl">stateManager.load</text>
+
+  <rect x="310" y="40"  width="120" height="40" rx="6" class="step active"/>
+  <text x="370" y="64" text-anchor="middle" class="lbl">detectRunContext</text>
+
+  <rect x="460" y="40"  width="120" height="40" rx="6" class="step"/>
+  <text x="520" y="64" text-anchor="middle" class="lbl">return summary</text>
+
+  <path d="M 130 60 L 158 60" class="arr"/>
+  <path d="M 280 60 L 308 60" class="arr"/>
+  <path d="M 430 60 L 458 60" class="arr partial"/>
+
+  <!-- error branch -->
+  <text x="190" y="130" class="small">SI INPUT INVALIDE…</text>
+  <rect x="160" y="140" width="120" height="40" rx="6" class="err-cap"/>
+  <text x="220" y="164" text-anchor="middle" class="lbl" style="fill:var(--error-fg)">SessionError</text>
+  <path d="M 220 80 L 220 138" class="arr err"/>
+
+  <text x="350" y="130" class="small">→ EXECUTE() RESTE LATENT</text>
+  <text x="0" y="200" font-size="10" fill="var(--ink-3)" font-family="var(--font-prose)" font-style="italic">Chaque <tspan font-family="var(--font-mono)" fill="var(--code-yield)" font-weight="700">yield*</tspan> avance d'une étape ; en cas d'erreur, l'effet bascule sur le canal d'erreur.</text>
+</svg>
+</body></html>

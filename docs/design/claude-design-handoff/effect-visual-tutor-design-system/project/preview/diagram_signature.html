@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:18px; background:var(--paper); font-family:var(--font-ui); }
+  svg { display:block; width:100%; height:auto; overflow:visible; }
+  .pill { fill:var(--surface-1); stroke:var(--rule); stroke-width:1; }
+  .lbl { font-family:var(--font-mono); font-size:11px; fill:var(--ink); }
+  .small { font-size:9px; fill:var(--ink-3); font-weight:600; letter-spacing:.06em; text-transform:uppercase; }
+  .arr { stroke:var(--ink-3); stroke-width:1.2; fill:none; marker-end:url(#a); }
+  .arr-err { stroke:var(--error-line); stroke-width:1.6; marker-end:url(#ae); fill:none; stroke-dasharray:4 3; }
+  .succ { fill:var(--success-bg); stroke:var(--success-line); }
+  .err  { fill:var(--error-bg);   stroke:var(--error-line); }
+  .req  { fill:var(--req-bg);     stroke:var(--req-line); }
+</style></head>
+<body>
+<svg viewBox="0 0 660 200">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker>
+    <marker id="ae" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--error-line)"/></marker>
+  </defs>
+  <text x="0" y="14" class="small">SIGNATURE — Effect&lt;Success, Error, Requirements&gt;</text>
+
+  <!-- Input -->
+  <rect x="10"  y="40" width="100" height="40" rx="20" class="pill"/>
+  <text x="60" y="65" text-anchor="middle" class="lbl">input</text>
+
+  <!-- Effect capsule -->
+  <rect x="150" y="32" width="280" height="56" rx="28" class="pill" style="stroke:var(--ink-2); stroke-width:1.5"/>
+  <text x="170" y="58" class="lbl">prepareRecapRun</text>
+  <text x="170" y="76" class="small">EFFECT.GEN</text>
+
+  <!-- Slots inside capsule -->
+  <rect x="288" y="42" width="44" height="20" rx="4" class="succ"/>
+  <text x="310" y="56" text-anchor="middle" font-size="10" fill="var(--success-fg)" font-weight="600">Success</text>
+  <rect x="336" y="42" width="40" height="20" rx="4" class="err"/>
+  <text x="356" y="56" text-anchor="middle" font-size="10" fill="var(--error-fg)" font-weight="600">Error</text>
+  <rect x="288" y="64" width="88" height="20" rx="4" class="req"/>
+  <text x="332" y="78" text-anchor="middle" font-size="10" fill="var(--req-fg)" font-weight="600">Requirements</text>
+
+  <!-- Output success -->
+  <rect x="470" y="14" width="180" height="36" rx="8" class="succ"/>
+  <text x="560" y="36" text-anchor="middle" class="lbl" style="fill:var(--success-fg)">PreparedRecapRun</text>
+
+  <!-- Output error -->
+  <rect x="470" y="58" width="180" height="36" rx="8" class="err"/>
+  <text x="560" y="80" text-anchor="middle" class="lbl" style="fill:var(--error-fg)">RecapPrepareError</text>
+
+  <!-- Requirements -->
+  <rect x="470" y="102" width="180" height="36" rx="8" class="req"/>
+  <text x="560" y="124" text-anchor="middle" class="lbl" style="fill:var(--req-fg)">RecapPrepareRuntime</text>
+
+  <!-- Arrows -->
+  <path d="M 110 60 L 148 60" class="arr"/>
+  <path d="M 432 50 C 450 32, 450 32, 470 32" class="arr"/>
+  <path d="M 432 70 C 450 76, 450 76, 470 76" class="arr-err"/>
+  <path d="M 380 88 C 420 110, 440 118, 470 118" class="arr" style="stroke:var(--req-line); marker-end:none"/>
+  <text x="400" y="135" class="small" style="fill:var(--req-fg)">FOURNI PAR LE RUNTIME</text>
+  <text x="248" y="105" class="small">EXÉCUTION RENVOIE…</text>
+</svg>
+</body></html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:20px; background:var(--paper); font-family:var(--font-ui); }
+  .grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; }
+  .role { border:1px solid var(--rule); border-radius:var(--r-3); padding:10px 12px; background:var(--surface-1); }
+  .swatchRow { display:flex; gap:6px; margin-bottom:8px; }
+  .sq { flex:1; height:24px; border-radius:var(--r-2); border:1px solid var(--rule); }
+  .name { font-family:var(--font-mono); font-size:11px; color:var(--ink-2); display:flex; justify-content:space-between; }
+  .name strong { color:var(--ink); font-weight:600; }
+  .demo { margin-top:8px; padding:6px 8px; border-radius:var(--r-2); font-family:var(--font-mono); font-size:11px; }
+  .hatch { background-image: var(--private-hatch), linear-gradient(var(--private-bg), var(--private-bg)); }
+  .glow { box-shadow: 0 0 0 4px var(--exec-glow); }
+</style></head>
+<body>
+<div class="grid">
+  <div class="role">
+    <div class="swatchRow">
+      <div class="sq" style="background:var(--private-fg)"></div>
+      <div class="sq hatch"></div>
+      <div class="sq" style="background:var(--private-line)"></div>
+    </div>
+    <div class="name"><strong>private</strong><span>Bundle interne</span></div>
+    <div class="demo hatch" style="color:var(--private-fg);border:1px solid var(--private-line)">RecapRunBundle</div>
+  </div>
+  <div class="role">
+    <div class="swatchRow">
+      <div class="sq" style="background:var(--public-fg)"></div>
+      <div class="sq" style="background:var(--public-bg)"></div>
+      <div class="sq" style="background:var(--public-line)"></div>
+    </div>
+    <div class="name"><strong>public</strong><span>API publique</span></div>
+    <div class="demo" style="background:var(--public-bg);color:var(--public-fg);border:1px solid var(--public-line)">RecapRunSummary</div>
+  </div>
+  <div class="role">
+    <div class="swatchRow">
+      <div class="sq" style="background:var(--prepared-fg)"></div>
+      <div class="sq" style="background:var(--prepared-bg)"></div>
+      <div class="sq" style="background:var(--prepared-line)"></div>
+    </div>
+    <div class="name"><strong>prepared</strong><span>Armé, en attente</span></div>
+    <div class="demo" style="background:var(--prepared-bg);color:var(--prepared-fg);border:2px solid var(--prepared-line)">execute ⟳</div>
+  </div>
+  <div class="role">
+    <div class="swatchRow">
+      <div class="sq" style="background:var(--exec-fg)"></div>
+      <div class="sq" style="background:var(--exec-bg)"></div>
+      <div class="sq" style="background:var(--exec-line)"></div>
+    </div>
+    <div class="name"><strong>execution</strong><span>En cours</span></div>
+    <div class="demo glow" style="background:var(--exec-bg);color:var(--exec-fg);border:1px solid var(--exec-line)">running…</div>
+  </div>
+</div>
+</body></html>

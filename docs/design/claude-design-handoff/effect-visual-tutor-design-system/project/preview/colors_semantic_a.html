@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:20px; background:var(--paper); font-family:var(--font-ui); }
+  .grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; }
+  .role { border:1px solid var(--rule); border-radius:var(--r-3); padding:10px 12px; background:var(--surface-1); }
+  .swatchRow { display:flex; gap:6px; margin-bottom:8px; }
+  .sq { flex:1; height:24px; border-radius:var(--r-2); border:1px solid var(--rule); }
+  .name { font-family:var(--font-mono); font-size:11px; color:var(--ink-2); display:flex; justify-content:space-between; }
+  .name strong { color:var(--ink); font-weight:600; }
+  .demo { margin-top:8px; padding:6px 8px; border-radius:var(--r-2); font-family:var(--font-mono); font-size:11px; }
+</style></head>
+<body>
+<div class="grid">
+  <div class="role">
+    <div class="swatchRow">
+      <div class="sq" style="background:var(--success-fg)"></div>
+      <div class="sq" style="background:var(--success-bg)"></div>
+      <div class="sq" style="background:var(--success-line)"></div>
+    </div>
+    <div class="name"><strong>success</strong><span>Réussite</span></div>
+    <div class="demo" style="background:var(--success-bg);color:var(--success-fg);border:1px solid var(--success-line)">RÉUSSITE ✓</div>
+  </div>
+  <div class="role">
+    <div class="swatchRow">
+      <div class="sq" style="background:var(--error-fg)"></div>
+      <div class="sq" style="background:var(--error-bg)"></div>
+      <div class="sq" style="background:var(--error-line)"></div>
+    </div>
+    <div class="name"><strong>error</strong><span>Erreur</span></div>
+    <div class="demo" style="background:var(--error-bg);color:var(--error-fg);border:1px solid var(--error-line)">SessionError</div>
+  </div>
+  <div class="role">
+    <div class="swatchRow">
+      <div class="sq" style="background:var(--req-fg)"></div>
+      <div class="sq" style="background:var(--req-bg)"></div>
+      <div class="sq" style="background:var(--req-line)"></div>
+    </div>
+    <div class="name"><strong>requirements</strong><span>Services</span></div>
+    <div class="demo" style="background:var(--req-bg);color:var(--req-fg);border:1px solid var(--req-line)">Requirements</div>
+  </div>
+  <div class="role">
+    <div class="swatchRow">
+      <div class="sq" style="background:var(--selected-fg)"></div>
+      <div class="sq" style="background:var(--selected-bg)"></div>
+      <div class="sq" style="background:var(--selected-line)"></div>
+    </div>
+    <div class="name"><strong>selected</strong><span>Ligne active</span></div>
+    <div class="demo" style="background:var(--selected-bg);color:var(--selected-fg);border-left:3px solid var(--selected-line);padding-left:6px">const x = …</div>
+  </div>
+</div>
+</body></html>

@@ -1,0 +1,8 @@
+node_modules
+.DS_Store
+.mise/
+
+plans/
+
+apps/frontend/playwright-report/
+apps/frontend/test-results/

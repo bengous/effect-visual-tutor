@@ -1,0 +1,35 @@
+[features]
+codex_hooks = true
+
+[[hooks.PostToolUse]]
+matcher = "^(apply_patch|Edit|Write)$"
+
+[[hooks.PostToolUse.hooks]]
+command = 'bun "$(git rev-parse --show-toplevel)/.codex/hooks/post-edit-quality.ts"'
+statusMessage = "Formatting and linting edited files"
+timeout = 45
+type = "command"
+
+[[hooks.PreToolUse]]
+matcher = "^(apply_patch|Edit|Write)$"
+
+[[hooks.PreToolUse.hooks]]
+command = 'bun "$(git rev-parse --show-toplevel)/.codex/hooks/guard-edit-paths.ts"'
+statusMessage = "Checking edited paths"
+timeout = 10
+type = "command"
+
+[[hooks.Stop]]
+
+[[hooks.Stop.hooks]]
+command = 'bun "$(git rev-parse --show-toplevel)/.codex/hooks/stop-validate.ts"'
+statusMessage = "Running Codex validation"
+timeout = 180
+type = "command"
+
+[mcp_servers.bun]
+args = ["-y", "mcp-bun@latest"]
+command = "bunx"
+
+[mcp_servers.bun.env]
+DISABLE_NOTIFICATIONS = "true"

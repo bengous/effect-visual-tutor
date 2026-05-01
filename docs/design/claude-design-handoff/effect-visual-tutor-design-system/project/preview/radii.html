@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:20px; background:var(--paper); font-family:var(--font-ui); display:flex; gap:16px; align-items:center; }
+  .card { padding:12px 14px; background:var(--surface-1); border:1px solid var(--rule); display:flex; align-items:center; justify-content:center; min-width:90px; min-height:60px; font-family:var(--font-mono); font-size:11px; color:var(--ink-2); }
+  .lbl { font-family:var(--font-mono); font-size:10px; color:var(--ink-3); display:block; margin-top:4px; text-align:center; }
+  .group { text-align:center; }
+</style></head>
+<body>
+<div class="group"><div class="card" style="border-radius:var(--r-1)">r-1</div><span class="lbl">2px</span></div>
+<div class="group"><div class="card" style="border-radius:var(--r-2)">r-2</div><span class="lbl">4px</span></div>
+<div class="group"><div class="card" style="border-radius:var(--r-3)">r-3</div><span class="lbl">6px · default</span></div>
+<div class="group"><div class="card" style="border-radius:var(--r-4)">r-4</div><span class="lbl">10px · frames</span></div>
+<div class="group"><div class="card" style="border-radius:var(--r-5)">r-5</div><span class="lbl">14px</span></div>
+<div class="group"><div class="card" style="border-radius:var(--r-pill)">r-pill</div><span class="lbl">badges</span></div>
+</body></html>
