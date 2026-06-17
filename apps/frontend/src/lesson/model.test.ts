@@ -112,7 +112,12 @@ describe("prepareRecapRun lesson model", () => {
       Object.keys(lines).find((line) => lines[Number(line)] === "error-branch"),
     );
 
-    const view = getLessonView(selectStep(createLessonSession(), lines[errorLine]));
+    const errorStepId = lines[errorLine];
+    if (errorStepId === undefined) {
+      throw new Error("expected an error-branch entry line in the clickable code map");
+    }
+
+    const view = getLessonView(selectStep(createLessonSession(), errorStepId));
 
     expect(view.currentStep.id).toBe("error-branch");
     expect(view.code.selectedLineNumbers).toContain(errorLine);
