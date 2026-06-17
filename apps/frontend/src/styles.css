@@ -859,6 +859,34 @@ button {
   margin: 0;
 }
 
+/*
+ * Keyboard focus ring (design system: "always visible, never removed").
+ * The global :focus-visible rule from the design tokens sets box-shadow,
+ * but several controls redefine box-shadow in more specific states
+ * (active segment, execute button), which silently overrides the ring.
+ * These rules reassert var(--ring) at matching specificity and compose it
+ * with each control's own shadow so the elevation/glow is preserved.
+ */
+.button:focus-visible,
+.code-row--button:focus-visible,
+.step-dot:focus-visible,
+.segmented__item:focus-visible,
+.toggle-row input:focus-visible,
+.checkpoint__options button:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}
+
+.segmented__item[aria-pressed="true"]:focus-visible {
+  box-shadow: var(--ring), var(--shadow-1);
+}
+
+.button--execute:focus-visible:not(:disabled) {
+  box-shadow:
+    var(--ring),
+    0 0 0 3px var(--exec-glow);
+}
+
 @media (max-width: 1080px) {
   .lesson-shell {
     padding: var(--s-5);
