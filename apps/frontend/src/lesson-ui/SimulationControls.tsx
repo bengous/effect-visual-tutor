@@ -53,7 +53,14 @@ export function SimulationControls({
         </button>
       </div>
 
-      <SimulationStatus simulation={simulation} />
+      <div
+        className="simulation-panel__status-live"
+        role="status"
+        aria-live="polite"
+        aria-label="Statut de la simulation"
+      >
+        <SimulationStatus simulation={simulation} />
+      </div>
     </section>
   );
 }

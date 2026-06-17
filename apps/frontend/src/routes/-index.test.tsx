@@ -44,4 +44,17 @@ describe("HomePage", () => {
     fireEvent.click(screen.getByRole("button", { name: "Exécuter" }));
     expect(screen.getByText(/exécution déclenchée/)).toBeVisible();
   });
+
+  test("announces simulation state changes through a polite status live region", () => {
+    render(<HomePage />);
+
+    const status = screen.getByRole("status", { name: "Statut de la simulation" });
+    expect(status).toHaveTextContent(/Choisis une combinaison/);
+
+    fireEvent.click(screen.getByRole("button", { name: "Préparer" }));
+    expect(status).toHaveTextContent(/Préparation réussie/);
+
+    fireEvent.click(screen.getByRole("button", { name: "Exécuter" }));
+    expect(status).toHaveTextContent(/exécution déclenchée/);
+  });
 });
