@@ -6,6 +6,7 @@ import {
   getClickableCodeLines,
   getLessonView,
   prepareRun,
+  resetSimulation,
   selectStep,
   setDetailLevel,
   setSimulationInput,
@@ -62,6 +63,34 @@ describe("prepareRecapRun lesson model", () => {
     const executingView = getLessonView(executePreparedRun(prepared));
     expect(executingView.simulation.status).toBe("executing");
     expect(executingView.diagram.executeActive).toBe(true);
+  });
+
+  test("resetting the simulation returns it to idle while keeping the chosen input", () => {
+    const prepared = prepareRun(
+      setSimulationInput(createLessonSession(), { noAi: true, rebuildToday: false }),
+    );
+    expect(getLessonView(prepared).simulation.status).toBe("prepared");
+
+    const reset = resetSimulation(prepared);
+    const view = getLessonView(reset);
+
+    expect(view.simulation.status).toBe("idle");
+    expect(view.simulation.canExecute).toBe(false);
+    expect(view.simulation.input).toEqual({ noAi: true, rebuildToday: false });
+    expect(view.simulation.prepared).toBeUndefined();
+    expect(view.diagram.errorBranchVisible).toBe(false);
+  });
+
+  test("resetting after the typed error clears the error from the view", () => {
+    const errored = prepareRun(
+      setSimulationInput(createLessonSession(), { noAi: true, rebuildToday: true }),
+    );
+    expect(getLessonView(errored).simulation.status).toBe("error");
+
+    const view = getLessonView(resetSimulation(errored));
+
+    expect(view.simulation.status).toBe("idle");
+    expect(view.simulation.error).toBeUndefined();
   });
 
   test("exposes clickable code lines for every yield* entry point in the source", () => {

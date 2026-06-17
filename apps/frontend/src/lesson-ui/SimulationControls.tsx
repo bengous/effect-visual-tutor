@@ -5,6 +5,7 @@ type SimulationControlsProps = {
   readonly onChangeInput: (input: Partial<SimulationInput>) => void;
   readonly onPrepare: () => void;
   readonly onExecute: () => void;
+  readonly onReset: () => void;
 };
 
 export function SimulationControls({
@@ -12,7 +13,9 @@ export function SimulationControls({
   onChangeInput,
   onPrepare,
   onExecute,
+  onReset,
 }: SimulationControlsProps) {
+  const canReset = simulation.status !== "idle";
   return (
     <section className="simulation-panel" aria-labelledby="simulation-title">
       <div>
@@ -51,6 +54,11 @@ export function SimulationControls({
         >
           Exécuter
         </button>
+        {canReset ? (
+          <button type="button" className="button button--secondary" onClick={onReset}>
+            Réinitialiser
+          </button>
+        ) : null}
       </div>
 
       <div

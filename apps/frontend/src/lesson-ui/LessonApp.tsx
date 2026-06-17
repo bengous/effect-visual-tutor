@@ -10,6 +10,7 @@ import {
   goToNextStep,
   goToPreviousStep,
   prepareRun,
+  resetSimulation,
   selectStep,
   setDetailLevel,
   setSimulationInput,
@@ -56,6 +57,7 @@ export function LessonApp() {
             onChangeInput={(input) => setSession((current) => setSimulationInput(current, input))}
             onPrepare={() => setSession((current) => prepareRun(current))}
             onExecute={() => setSession((current) => executePreparedRun(current))}
+            onReset={() => setSession((current) => resetSimulation(current))}
           />
         </div>
       </section>

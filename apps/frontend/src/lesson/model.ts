@@ -216,6 +216,20 @@ export function prepareRun(session: LessonSession): LessonSession {
   };
 }
 
+export function resetSimulation(session: LessonSession): LessonSession {
+  if (session.simulation.status === "idle") {
+    return session;
+  }
+
+  return {
+    ...session,
+    simulation: {
+      status: "idle",
+      input: session.simulation.input,
+    },
+  };
+}
+
 export function executePreparedRun(session: LessonSession): LessonSession {
   if (session.simulation.status !== "prepared") {
     return session;

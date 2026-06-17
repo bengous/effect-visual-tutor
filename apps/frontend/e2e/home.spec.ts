@@ -24,6 +24,10 @@ test("shows invalid input branch and prepares successful execution", async ({ pa
   await page.getByRole("checkbox", { name: "rebuildToday" }).uncheck();
   await page.getByRole("button", { name: "Préparer" }).click();
   await expect(page.getByRole("button", { name: "Exécuter" })).toBeEnabled();
+
+  await page.getByRole("button", { name: "Réinitialiser" }).click();
+  await expect(page.getByRole("button", { name: "Exécuter" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Réinitialiser" })).toHaveCount(0);
 });
 
 test("shows the focus ring on active controls during keyboard navigation", async ({ page }) => {
