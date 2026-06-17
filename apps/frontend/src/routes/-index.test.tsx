@@ -57,4 +57,29 @@ describe("HomePage", () => {
     fireEvent.click(screen.getByRole("button", { name: "Exécuter" }));
     expect(status).toHaveTextContent(/exécution déclenchée/);
   });
+
+  test("navigates lesson steps with the arrow keys and Home/End from the step dots", () => {
+    render(<HomePage />);
+
+    const conceptHeading = () =>
+      screen.getByRole("heading", {
+        level: 2,
+        name: /^Lire|^Charger|^Voir|^Détecter|^Séparer|^Armer/,
+      });
+    expect(conceptHeading()).toHaveAccessibleName("Lire la signature de l'effet");
+
+    const firstDot = screen.getByRole("button", { name: /^Étape 01:/ });
+    firstDot.focus();
+
+    fireEvent.keyDown(firstDot, { key: "ArrowRight" });
+    expect(conceptHeading()).toHaveAccessibleName("Lire Effect.gen comme une suite d'étapes");
+    expect(screen.getByRole("button", { name: /^Étape 02:/ })).toHaveFocus();
+
+    fireEvent.keyDown(screen.getByRole("button", { name: /^Étape 02:/ }), { key: "End" });
+    expect(conceptHeading()).toHaveAccessibleName("Armer execute sans lancer le recap");
+
+    fireEvent.keyDown(screen.getByRole("button", { name: /^Étape 08:/ }), { key: "Home" });
+    expect(conceptHeading()).toHaveAccessibleName("Lire la signature de l'effet");
+    expect(screen.getByRole("button", { name: /^Étape 01:/ })).toHaveFocus();
+  });
 });
