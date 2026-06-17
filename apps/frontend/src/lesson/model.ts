@@ -358,26 +358,28 @@ function buildCodeHighlights(step: LessonStep, state: SimulationState): readonly
   return mergeHighlights(highlights);
 }
 
+const ROLE_HIGHLIGHTS: Record<SemanticRole, CodeHighlight> = {
+  requirements: { lineNumbers: [5, 6], role: "requirements", label: "requirements" },
+  success: {
+    lineNumbers: [15, 21, 23, 24, 25, 26, 27, 28, 29, 30],
+    role: "success",
+    label: "success",
+  },
+  error: { lineNumbers: [8, 9, 10, 11, 12], role: "error", label: "error" },
+  private: { lineNumbers: [22, 35], role: "private", label: "privé" },
+  public: {
+    lineNumbers: [23, 24, 25, 26, 27, 28, 29, 30, 33, 34],
+    role: "public",
+    label: "public",
+  },
+  prepared: { lineNumbers: [32, 33, 34, 35, 36], role: "prepared", label: "préparé" },
+  execution: { lineNumbers: [35], role: "execution", label: "execution" },
+  selected: { lineNumbers: [], role: "selected", label: "selected" },
+  inactive: { lineNumbers: [], role: "inactive", label: "inactive" },
+};
+
 function highlightForRole(role: SemanticRole): CodeHighlight {
-  switch (role) {
-    case "requirements":
-      return { lineNumbers: [5, 6], role, label: "requirements" };
-    case "success":
-      return { lineNumbers: [15, 21, 23, 24, 25, 26, 27, 28, 29, 30], role, label: "success" };
-    case "error":
-      return { lineNumbers: [8, 9, 10, 11, 12], role, label: "error" };
-    case "private":
-      return { lineNumbers: [22, 35], role, label: "privé" };
-    case "public":
-      return { lineNumbers: [23, 24, 25, 26, 27, 28, 29, 30, 33, 34], role, label: "public" };
-    case "prepared":
-      return { lineNumbers: [32, 33, 34, 35, 36], role, label: "préparé" };
-    case "execution":
-      return { lineNumbers: [35], role, label: "execution" };
-    case "selected":
-    case "inactive":
-      return { lineNumbers: [], role, label: role };
-  }
+  return ROLE_HIGHLIGHTS[role];
 }
 
 function mergeHighlights(highlights: readonly CodeHighlight[]): readonly CodeHighlight[] {

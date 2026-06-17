@@ -369,28 +369,24 @@ function ExecutionDiagram({
   );
 }
 
+const DIAGRAM_TITLES: Record<DiagramMode, string> = {
+  signature: "Signature Effect",
+  flow: "Flux yield*",
+  encapsulation: "Privé vs public",
+  execution: "Prepare puis execute",
+};
+
 function diagramTitle(mode: DiagramMode): string {
-  switch (mode) {
-    case "signature":
-      return "Signature Effect";
-    case "flow":
-      return "Flux yield*";
-    case "encapsulation":
-      return "Privé vs public";
-    case "execution":
-      return "Prepare puis execute";
-  }
+  return DIAGRAM_TITLES[mode];
 }
 
+const DIAGRAM_MODE_LABELS: Record<DiagramMode, string> = {
+  signature: "Signature",
+  flow: "Flow",
+  encapsulation: "Boundary",
+  execution: "Execution",
+};
+
 function diagramModeLabel(mode: DiagramMode): string {
-  switch (mode) {
-    case "signature":
-      return "Signature";
-    case "flow":
-      return "Flow";
-    case "encapsulation":
-      return "Boundary";
-    case "execution":
-      return "Execution";
-  }
+  return DIAGRAM_MODE_LABELS[mode];
 }

@@ -106,10 +106,15 @@ function CodeRow({
 function renderTokens(line: string, lineNumber: number) {
   const tokens = line.match(syntaxPattern) ?? [];
 
-  return tokens.map((token, index) => {
+  let column = 0;
+  return tokens.map((token) => {
+    // Key on the token's column offset: stable and unique within the line, since
+    // tokens never reorder (unlike an array index, which the linter rejects).
+    const key = `${lineNumber}-${column}`;
+    column += token.length;
     const className = tokenClassName(token);
     return (
-      <span key={`${lineNumber}-${index}`} className={className}>
+      <span key={key} className={className}>
         {token}
       </span>
     );
