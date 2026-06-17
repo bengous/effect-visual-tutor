@@ -5,6 +5,7 @@ import {
   answerCheckpoint,
   createLessonSession,
   executePreparedRun,
+  getClickableCodeLines,
   getLessonView,
   goToNextStep,
   goToPreviousStep,
@@ -19,16 +20,10 @@ import { DiagramPanel } from "./DiagramPanel";
 import { SimulationControls } from "./SimulationControls";
 import { StepNav } from "./StepNav";
 
-const yieldLineStepIds: Readonly<Record<number, string>> = {
-  5: "services",
-  6: "state",
-  15: "context",
-};
-
 export function LessonApp() {
   const [session, setSession] = useState<LessonSession>(() => createLessonSession());
   const view = getLessonView(session);
-  const lineStepIds = useMemo(() => yieldLineStepIds, []);
+  const lineStepIds = useMemo(() => getClickableCodeLines(), []);
 
   function updateDetailLevel(detailLevel: DetailLevel) {
     setSession((current) => setDetailLevel(current, detailLevel));

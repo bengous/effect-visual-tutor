@@ -129,6 +129,7 @@ export const prepareRecapLesson: LessonContent = {
       diagramMode: "flow",
       selectedLineNumbers: [5],
       conceptRoles: ["requirements"],
+      codeEntryLine: 5,
       checkpoint: {
         id: "services-main",
         prompt: "Que produit ce yield* ?",
@@ -160,6 +161,7 @@ export const prepareRecapLesson: LessonContent = {
       diagramMode: "flow",
       selectedLineNumbers: [6],
       conceptRoles: ["requirements", "success"],
+      codeEntryLine: 6,
       checkpoint: {
         id: "state-main",
         prompt: "Pourquoi services arrive avant state ?",
@@ -192,6 +194,7 @@ export const prepareRecapLesson: LessonContent = {
       diagramMode: "flow",
       selectedLineNumbers: [8, 9, 10, 11, 12],
       conceptRoles: ["error"],
+      codeEntryLine: 9,
       checkpoint: {
         id: "error-main",
         prompt: "Que devient execute sur ce chemin ?",
@@ -224,6 +227,7 @@ export const prepareRecapLesson: LessonContent = {
       diagramMode: "flow",
       selectedLineNumbers: [15, 16, 17, 18, 19],
       conceptRoles: ["selected", "success"],
+      codeEntryLine: 15,
       checkpoint: {
         id: "context-main",
         prompt: "À quoi sert context ?",

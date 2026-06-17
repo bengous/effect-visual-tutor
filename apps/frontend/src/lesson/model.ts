@@ -70,6 +70,20 @@ export function getLessonView(
   };
 }
 
+export function getClickableCodeLines(
+  lesson: LessonContent = prepareRecapLesson,
+): Readonly<Record<number, string>> {
+  const entries: Record<number, string> = {};
+
+  for (const step of lesson.steps) {
+    if (step.codeEntryLine !== undefined) {
+      entries[step.codeEntryLine] = step.id;
+    }
+  }
+
+  return entries;
+}
+
 export function setDetailLevel(session: LessonSession, detailLevel: DetailLevel): LessonSession {
   return {
     ...session,

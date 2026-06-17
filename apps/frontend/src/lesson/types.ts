@@ -42,6 +42,8 @@ export type LessonStep = {
   readonly selectedLineNumbers: readonly number[];
   readonly conceptRoles: readonly SemanticRole[];
   readonly checkpoint: Checkpoint;
+  // Source line that opens this concept when the learner clicks it in the code.
+  readonly codeEntryLine?: number;
 };
 
 export type LessonContent = {

@@ -3,8 +3,10 @@ import {
   answerCheckpoint,
   createLessonSession,
   executePreparedRun,
+  getClickableCodeLines,
   getLessonView,
   prepareRun,
+  selectStep,
   setDetailLevel,
   setSimulationInput,
 } from "./model";
@@ -60,5 +62,30 @@ describe("prepareRecapRun lesson model", () => {
     const executingView = getLessonView(executePreparedRun(prepared));
     expect(executingView.simulation.status).toBe("executing");
     expect(executingView.diagram.executeActive).toBe(true);
+  });
+
+  test("exposes clickable code lines for every yield* entry point in the source", () => {
+    const lines = getClickableCodeLines();
+
+    // The author marks which source lines open a concept directly from the code.
+    expect(lines).toMatchObject({
+      5: "services",
+      6: "state",
+      9: "error-branch",
+      15: "context",
+    });
+  });
+
+  test("clicking the error-branch source line reveals the typed error concept", () => {
+    const lines = getClickableCodeLines();
+    const errorLine = Number(
+      Object.keys(lines).find((line) => lines[Number(line)] === "error-branch"),
+    );
+
+    const view = getLessonView(selectStep(createLessonSession(), lines[errorLine]));
+
+    expect(view.currentStep.id).toBe("error-branch");
+    expect(view.code.selectedLineNumbers).toContain(errorLine);
+    expect(view.diagram.errorBranchVisible).toBe(true);
   });
 });

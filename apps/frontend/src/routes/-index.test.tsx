@@ -82,4 +82,14 @@ describe("HomePage", () => {
     expect(conceptHeading()).toHaveAccessibleName("Lire la signature de l'effet");
     expect(screen.getByRole("button", { name: /^Étape 01:/ })).toHaveFocus();
   });
+
+  test("opens the typed error concept by clicking its yield* line in the code", () => {
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Explorer la ligne 9" }));
+
+    expect(
+      screen.getByRole("heading", { level: 2, name: /branche d'erreur noAi \+ rebuildToday/ }),
+    ).toBeVisible();
+  });
 });
