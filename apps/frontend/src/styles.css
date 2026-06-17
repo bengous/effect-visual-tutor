@@ -380,6 +380,22 @@ button {
   stroke-width: 2.5;
 }
 
+.flow-group {
+  cursor: pointer;
+}
+
+/* Code↔diagram link: hovering or focusing a node lights its stroke, same as the
+   code side. The stroke-width bump is a non-colour focus cue. See MOTION.md #2. */
+.flow-group:hover .flow-node,
+.flow-group:focus-visible .flow-node {
+  stroke: var(--selected-line);
+  stroke-width: 2.5;
+}
+
+.flow-group:focus-visible {
+  outline: none;
+}
+
 .flow-node--success {
   fill: var(--success-bg);
   stroke: var(--success-line);
@@ -709,6 +725,23 @@ button {
   border-color: var(--error-line);
   background: var(--error-bg);
   color: var(--error-fg);
+}
+
+.checkpoint__result {
+  display: grid;
+  gap: var(--s-3);
+  justify-items: start;
+}
+
+/* Non-colour cues so correctness never relies on hue alone (ACCESSIBILITY.md). */
+.checkpoint__feedback-icon {
+  margin-right: var(--s-1);
+  font-weight: 700;
+}
+
+.checkpoint__feedback-label {
+  margin-right: var(--s-2);
+  font-weight: 650;
 }
 
 .simulation-panel {

@@ -100,6 +100,15 @@ function SimulationStatus({ simulation }: { readonly simulation: LessonView["sim
     );
   }
 
+  if (simulation.status === "idle" && simulation.wasReset) {
+    return (
+      <p className="simulation-status">
+        Simulation réinitialisée. Choisis une combinaison, puis relance{" "}
+        <code className="code-inline">prepareRecapRun</code>.
+      </p>
+    );
+  }
+
   return (
     <p className="simulation-status">
       Choisis une combinaison, puis lance <code className="code-inline">prepareRecapRun</code>.

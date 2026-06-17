@@ -77,6 +77,9 @@ export type SimulationState =
   | {
       readonly status: "idle";
       readonly input: SimulationInput;
+      // True when this idle state was reached by an explicit reset (not the
+      // initial state or an input change), so the status region can announce it.
+      readonly wasReset?: boolean;
     }
   | {
       readonly status: "error";
@@ -139,6 +142,7 @@ export type LessonView = {
     readonly status: SimulationState["status"];
     readonly input: SimulationInput;
     readonly canExecute: boolean;
+    readonly wasReset: boolean;
     readonly error?: RecapPrepareError;
     readonly prepared?: PreparedRun;
   };

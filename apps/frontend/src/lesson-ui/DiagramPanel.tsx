@@ -1,6 +1,13 @@
 import type { DiagramMode, LessonView } from "../lesson/types";
+import type { KeyboardEvent } from "react";
 
-export function DiagramPanel({ view }: { readonly view: LessonView }) {
+export function DiagramPanel({
+  view,
+  onSelectStep,
+}: {
+  readonly view: LessonView;
+  readonly onSelectStep: (stepId: string) => void;
+}) {
   return (
     <section className="diagram-panel" aria-labelledby="diagram-title">
       <div className="diagram-panel__header">
@@ -20,6 +27,7 @@ export function DiagramPanel({ view }: { readonly view: LessonView }) {
           <FlowDiagram
             activeStepId={view.currentStep.id}
             errorBranchVisible={view.diagram.errorBranchVisible}
+            onSelectStep={onSelectStep}
           />
         ) : null}
         {view.diagram.mode === "encapsulation" ? <EncapsulationDiagram /> : null}
@@ -94,9 +102,11 @@ function SignatureSlot({
 function FlowDiagram({
   activeStepId,
   errorBranchVisible,
+  onSelectStep,
 }: {
   readonly activeStepId: string;
   readonly errorBranchVisible: boolean;
+  readonly onSelectStep: (stepId: string) => void;
 }) {
   return (
     <svg className="lesson-diagram" viewBox="0 0 640 360" role="img" aria-label="Flux Effect.gen">
@@ -107,6 +117,7 @@ function FlowDiagram({
         label="services"
         active={activeStepId === "services"}
         tone="requirements"
+        onSelectStep={onSelectStep}
       />
       <FlowArrow x1={152} y1={150} x2={210} y2={150} />
       <FlowNode
@@ -116,6 +127,7 @@ function FlowDiagram({
         label="state"
         active={activeStepId === "state"}
         tone="requirements"
+        onSelectStep={onSelectStep}
       />
       <FlowArrow x1={334} y1={150} x2={390} y2={150} />
       <FlowNode
@@ -125,6 +137,7 @@ function FlowDiagram({
         label="context"
         active={activeStepId === "context"}
         tone="selected"
+        onSelectStep={onSelectStep}
       />
 
       <FlowArrow x1={514} y1={150} x2={588} y2={150} />
@@ -168,6 +181,9 @@ function FlowDiagram({
   );
 }
 
+/* eslint-disable jsx-a11y/prefer-tag-over-role -- an SVG <g> cannot be a native
+   <button>; role="button" + tabIndex is the accessible equivalent for a
+   focusable diagram node (see ACCESSIBILITY.md, Keyboard). */
 function FlowNode({
   active,
   id,
@@ -175,6 +191,7 @@ function FlowNode({
   tone,
   x,
   y,
+  onSelectStep,
 }: {
   readonly active: boolean;
   readonly id: string;
@@ -182,11 +199,29 @@ function FlowNode({
   readonly tone: "requirements" | "selected";
   readonly x: number;
   readonly y: number;
+  readonly onSelectStep: (stepId: string) => void;
 }) {
+  // Focusing a node activates the same code↔diagram link as the code side; Esc
+  // releases it. See ACCESSIBILITY.md (Keyboard) and MOTION.md (animation 2).
+  function handleKeyDown(event: KeyboardEvent<SVGGElement>) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onSelectStep(id);
+    } else if (event.key === "Escape") {
+      event.currentTarget.blur();
+    }
+  }
+
   return (
     <g
       className={`flow-group flow-group--${tone} ${active ? "flow-group--active" : ""}`}
       data-node={id}
+      role="button"
+      tabIndex={0}
+      aria-label={`Concept ${label}`}
+      aria-current={active ? "step" : undefined}
+      onClick={() => onSelectStep(id)}
+      onKeyDown={handleKeyDown}
     >
       <rect className="flow-node" x={x} y={y} width="116" height="56" rx="10" />
       <text className="diagram-label" x={x + 58} y={y + 34} textAnchor="middle">
@@ -195,6 +230,7 @@ function FlowNode({
     </g>
   );
 }
+/* eslint-enable jsx-a11y/prefer-tag-over-role */
 
 function FlowArrow({
   x1,

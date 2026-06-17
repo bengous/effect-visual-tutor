@@ -11,6 +11,7 @@ import {
   goToPreviousStep,
   prepareRun,
   resetSimulation,
+  retryCheckpoint,
   selectStep,
   setDetailLevel,
   setSimulationInput,
@@ -46,10 +47,13 @@ export function LessonApp() {
         <CodeFrame code={view.code} lineStepIds={lineStepIds} onSelectStep={updateStep} />
 
         <div className="right-rail">
-          <DiagramPanel view={view} />
+          <DiagramPanel view={view} onSelectStep={updateStep} />
           <ConceptPanel
             view={view}
             onAnswerCheckpoint={updateCheckpoint}
+            onRetryCheckpoint={(checkpointId) =>
+              setSession((current) => retryCheckpoint(current, checkpointId))
+            }
             onSetDetailLevel={updateDetailLevel}
           />
           <SimulationControls

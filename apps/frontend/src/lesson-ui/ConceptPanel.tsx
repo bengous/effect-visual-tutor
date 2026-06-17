@@ -3,10 +3,16 @@ import type { DetailLevel, LessonView } from "../lesson/types";
 type ConceptPanelProps = {
   readonly view: LessonView;
   readonly onAnswerCheckpoint: (optionId: string) => void;
+  readonly onRetryCheckpoint: (checkpointId: string) => void;
   readonly onSetDetailLevel: (detailLevel: DetailLevel) => void;
 };
 
-export function ConceptPanel({ view, onAnswerCheckpoint, onSetDetailLevel }: ConceptPanelProps) {
+export function ConceptPanel({
+  view,
+  onAnswerCheckpoint,
+  onRetryCheckpoint,
+  onSetDetailLevel,
+}: ConceptPanelProps) {
   const step = view.currentStep;
 
   return (
@@ -54,15 +60,32 @@ export function ConceptPanel({ view, onAnswerCheckpoint, onSetDetailLevel }: Con
           ))}
         </div>
         {view.checkpointFeedback === undefined ? null : (
-          <p
-            className={`checkpoint__feedback ${
-              view.checkpointFeedback.correct
-                ? "checkpoint__feedback--correct"
-                : "checkpoint__feedback--wrong"
-            }`}
-          >
-            {view.checkpointFeedback.message}
-          </p>
+          <div className="checkpoint__result">
+            <p
+              className={`checkpoint__feedback ${
+                view.checkpointFeedback.correct
+                  ? "checkpoint__feedback--correct"
+                  : "checkpoint__feedback--wrong"
+              }`}
+            >
+              <span className="checkpoint__feedback-icon" aria-hidden="true">
+                {view.checkpointFeedback.correct ? "✓" : "✗"}
+              </span>
+              <span className="checkpoint__feedback-label">
+                {view.checkpointFeedback.correct ? "Bonne réponse" : "Mauvaise réponse"}
+              </span>
+              <span className="checkpoint__feedback-message">
+                {view.checkpointFeedback.message}
+              </span>
+            </p>
+            <button
+              type="button"
+              className="button button--secondary checkpoint__retry"
+              onClick={() => onRetryCheckpoint(step.checkpoint.id)}
+            >
+              Réessayer
+            </button>
+          </div>
         )}
       </div>
     </section>

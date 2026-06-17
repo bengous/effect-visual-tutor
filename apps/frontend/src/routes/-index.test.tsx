@@ -92,4 +92,64 @@ describe("HomePage", () => {
       screen.getByRole("heading", { level: 2, name: /branche d'erreur noAi \+ rebuildToday/ }),
     ).toBeVisible();
   });
+
+  test("announces resetting the simulation in the status live region", () => {
+    render(<HomePage />);
+    const status = screen.getByRole("status", { name: "Statut de la simulation" });
+
+    fireEvent.click(screen.getByRole("button", { name: "Préparer" }));
+    expect(status).toHaveTextContent(/Préparation réussie/);
+
+    fireEvent.click(screen.getByRole("button", { name: "Réinitialiser" }));
+    expect(status).toHaveTextContent(/réinitialis/i);
+  });
+
+  test("lets the learner retry a checkpoint after answering it", () => {
+    render(<HomePage />);
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "La fonction lance déjà le recap complet." }),
+    );
+    expect(screen.getByText(/Pas encore le recap complet/)).toBeVisible();
+
+    fireEvent.click(screen.getByRole("button", { name: "Réessayer" }));
+    expect(screen.queryByText(/Pas encore le recap complet/)).not.toBeInTheDocument();
+  });
+
+  test("signals checkpoint feedback with a label, not colour alone", () => {
+    render(<HomePage />);
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "La fonction lance déjà le recap complet." }),
+    );
+    expect(screen.getByText("Mauvaise réponse")).toBeVisible();
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Un contrat de réussite, erreur et dépendances." }),
+    );
+    expect(screen.getByText("Bonne réponse")).toBeVisible();
+  });
+
+  test("selects a concept by activating its diagram flow node", () => {
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("button", { name: /^Étape 03:/ }));
+    fireEvent.click(screen.getByRole("button", { name: "Concept state" }));
+
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Charger l'état avant de décider" }),
+    ).toBeVisible();
+  });
+
+  test("releases the diagram node link when Escape is pressed", () => {
+    render(<HomePage />);
+
+    fireEvent.click(screen.getByRole("button", { name: /^Étape 03:/ }));
+    const node = screen.getByRole("button", { name: "Concept services" });
+    node.focus();
+    expect(node).toHaveFocus();
+
+    fireEvent.keyDown(node, { key: "Escape" });
+    expect(node).not.toHaveFocus();
+  });
 });

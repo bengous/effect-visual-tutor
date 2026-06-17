@@ -226,7 +226,22 @@ export function resetSimulation(session: LessonSession): LessonSession {
     simulation: {
       status: "idle",
       input: session.simulation.input,
+      wasReset: true,
     },
+  };
+}
+
+export function retryCheckpoint(session: LessonSession, checkpointId: string): LessonSession {
+  if (session.checkpointFeedbackById[checkpointId] === undefined) {
+    return session;
+  }
+
+  const nextFeedback = { ...session.checkpointFeedbackById };
+  delete nextFeedback[checkpointId];
+
+  return {
+    ...session,
+    checkpointFeedbackById: nextFeedback,
   };
 }
 
@@ -287,6 +302,7 @@ function getSimulationView(state: SimulationState): LessonView["simulation"] {
     status: state.status,
     input: state.input,
     canExecute: state.status === "prepared",
+    wasReset: state.status === "idle" && state.wasReset === true,
   };
 
   if (state.status === "error") {

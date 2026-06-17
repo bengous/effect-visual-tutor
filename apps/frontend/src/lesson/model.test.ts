@@ -7,6 +7,7 @@ import {
   getLessonView,
   prepareRun,
   resetSimulation,
+  retryCheckpoint,
   selectStep,
   setDetailLevel,
   setSimulationInput,
@@ -116,5 +117,23 @@ describe("prepareRecapRun lesson model", () => {
     expect(view.currentStep.id).toBe("error-branch");
     expect(view.code.selectedLineNumbers).toContain(errorLine);
     expect(view.diagram.errorBranchVisible).toBe(true);
+  });
+
+  test("flags the idle state as reset so the status region can announce it", () => {
+    const afterReset = resetSimulation(prepareRun(createLessonSession()));
+
+    expect(getLessonView(afterReset).simulation.wasReset).toBe(true);
+    expect(getLessonView(createLessonSession()).simulation.wasReset).toBeFalsy();
+    expect(getLessonView(setSimulationInput(afterReset, { noAi: true })).simulation.wasReset).toBe(
+      false,
+    );
+  });
+
+  test("retrying a checkpoint clears its recorded feedback", () => {
+    const answered = answerCheckpoint(createLessonSession(), "signature-main", "runs-now");
+    expect(getLessonView(answered).checkpointFeedback).toBeDefined();
+
+    const retried = retryCheckpoint(answered, "signature-main");
+    expect(getLessonView(retried).checkpointFeedback).toBeUndefined();
   });
 });
