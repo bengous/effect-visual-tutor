@@ -35,7 +35,6 @@ type Workspace = {
 
 const stateRoot = "/tmp/effect-visual-tutor-codex-hooks";
 const generatedPaths = new Set([
-  "AGENTS.md",
   "apps/frontend/src/AGENTS.md",
   "apps/frontend/src/routeTree.gen.ts",
 ]);
@@ -367,7 +366,7 @@ function touchedStatePath(input: HookInput): string {
 function generatedPathMessage(paths: readonly string[]): string {
   return `Generated files must not be edited directly: ${paths.join(
     ", ",
-  )}. Edit CLAUDE.md, .claude/rules/*.md, or route files, then run the matching generator.`;
+  )}. Edit .claude/rules/*.md or route files, then run the matching generator.`;
 }
 
 function commandFailure(label: string, filePath: string, result: CommandResult): string {

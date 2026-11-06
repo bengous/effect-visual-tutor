@@ -41,7 +41,9 @@ describe("Codex hook path handling", () => {
   });
 
   test("blocks generated files", () => {
-    expect(forbiddenTouchedPaths(["AGENTS.md", "docs/product/PRD.md"])).toEqual(["AGENTS.md"]);
+    expect(forbiddenTouchedPaths(["apps/frontend/src/AGENTS.md", "docs/product/PRD.md"])).toEqual([
+      "apps/frontend/src/AGENTS.md",
+    ]);
   });
 
   test("extracts file path fields from hook input", async () => {
@@ -69,7 +71,7 @@ describe("Codex post-edit quality gate", () => {
         cwd: process.cwd(),
         session_id: "test-session",
         turn_id: "test-turn",
-        tool_input: { file_path: "AGENTS.md" },
+        tool_input: { file_path: "apps/frontend/src/AGENTS.md" },
       },
       async (command): Promise<CommandResult> => {
         calls.push(command.join(" "));
