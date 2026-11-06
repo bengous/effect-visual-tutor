@@ -1,21 +1,22 @@
 #!/usr/bin/env bun
 
 /**
- * Mirrors Claude Code's native config into AGENTS.md for non-Claude AI agents
+ * Mirrors .claude/rules/ into nested AGENTS.md files for non-Claude AI agents
  * (Codex, OpenCode, etc.) that don't read .claude/rules/.
  *
  * ## Why this exists
  *
- * Claude Code loads CLAUDE.md + .claude/rules/ natively — it never reads AGENTS.md.
- * Other AI agents (Codex, OpenCode) don't understand .claude/rules/ but do walk
- * the directory tree loading AGENTS.md files. This script keeps them in sync so
- * all agents share the same source of truth.
+ * The root AGENTS.md is the hand-edited instructions file every agent reads,
+ * Claude Code included; this script never reads or writes it. Claude Code also
+ * loads .claude/rules/ natively. Other AI agents (Codex, OpenCode) don't
+ * understand .claude/rules/ but do walk the directory tree loading AGENTS.md
+ * files. This script generates those nested files so all agents share the same
+ * rules.
  *
  * ## Mapping
  *
  *   Source (Claude Code native)      → Generated (for other agents)
  *   ──────────────────────────────────────────────────────────────
- *   CLAUDE.md                        → ./AGENTS.md
  *   .claude/rules/<rule>.md          → <dir>/AGENTS.md
  *
  * <dir> is the path prefix before the first glob wildcard in the rule's
@@ -23,8 +24,9 @@
  * "scripts/setup" from "scripts/setup/\**").
  *
  * Layer files contain ONLY the matched rules — no root content duplication.
- * Non-Claude agents get root context from ./AGENTS.md and directory-specific
- * rules from <dir>/AGENTS.md as they navigate the directory tree.
+ * Agents get root context from the hand-edited ./AGENTS.md and non-Claude
+ * agents get directory-specific rules from <dir>/AGENTS.md as they navigate
+ * the directory tree.
  *
  * ## Rule file schema (.claude/rules/*.md)
  *
@@ -44,7 +46,7 @@
  *
  * ## Manifest schema (.agents/agents-md-manifest.json)
  *
- *   { "generated": ["AGENTS.md", "apps/frontend/src/AGENTS.md", ...] }
+ *   { "generated": ["apps/frontend/src/AGENTS.md", ...] }
  *
  * Tracks all managed files. Used to detect stale files when rules are removed.
  *
@@ -59,9 +61,8 @@
  *
  * ## Usage
  *
- *   bun scripts/agents/sync-agents-md.ts --write                 # generate/update files
- *   bun scripts/agents/sync-agents-md.ts --check                 # verify no drift (default)
- *   bun scripts/agents/sync-agents-md.ts --write --preserve-root # keep existing root AGENTS.md
+ *   bun scripts/agents/sync-agents-md.ts --write   # generate/update files
+ *   bun scripts/agents/sync-agents-md.ts --check   # verify no drift (default)
  */
 
 import { Glob } from "bun";
@@ -69,8 +70,6 @@ import { lstat, mkdir, rm } from "node:fs/promises";
 import { dirname } from "node:path";
 
 const RULES_DIR = ".claude/rules";
-const ROOT_MD = "CLAUDE.md";
-const ROOT_AGENTS_MD = "AGENTS.md";
 const MANIFEST_PATH = ".agents/agents-md-manifest.json";
 const MANAGED_AGENTS_GLOBS = ["apps/*/src/AGENTS.md", "scripts/AGENTS.md", "scripts/*/AGENTS.md"];
 
@@ -199,8 +198,8 @@ async function writeLfFile(path: string, content: string): Promise<void> {
   await Bun.write(path, normalized);
 }
 
-async function listManagedAgentsPaths(includeRoot: boolean): Promise<string[]> {
-  const paths = includeRoot ? [ROOT_AGENTS_MD] : [];
+async function listManagedAgentsPaths(): Promise<string[]> {
+  const paths: string[] = [];
   for (const pattern of MANAGED_AGENTS_GLOBS) {
     const glob = new Glob(pattern);
     for await (const path of glob.scan({ cwd: "." })) {
@@ -254,22 +253,13 @@ async function buildDirectoryMap(): Promise<{
 
 async function main() {
   const mode = process.argv.includes("--write") ? "write" : "check";
-  const preserveRoot = process.argv.includes("--preserve-root");
 
   const { dirToRules } = await buildDirectoryMap();
-  const rootContent = normalizeNewlines(await Bun.file(ROOT_MD).text());
   const oldManifest = await readManifest();
-  const rootAgentsFile = Bun.file(ROOT_AGENTS_MD);
-  const rootExists = await rootAgentsFile.exists();
-  const rootWasManaged = oldManifest.generated.includes(ROOT_AGENTS_MD);
-  const preserveExistingRoot = preserveRoot && rootExists && !rootWasManaged;
-  const targetPaths = new Set<string>(preserveExistingRoot ? [] : [ROOT_AGENTS_MD]);
+  const targetPaths = new Set<string>();
 
   // Generate layer AGENTS.md (rules only, no root duplication)
   const generated = new Map<string, string>();
-  if (!preserveExistingRoot) {
-    generated.set(ROOT_AGENTS_MD, rootContent);
-  }
   for (const [dir, rules] of dirToRules) {
     const path = `${dir}/AGENTS.md`;
     targetPaths.add(path);
@@ -280,17 +270,13 @@ async function main() {
   const stale = oldManifest.generated.filter((p) => !targetPaths.has(p));
 
   const errors: string[] = [];
-  const managedAgentsPaths = await listManagedAgentsPaths(!preserveExistingRoot);
+  const managedAgentsPaths = await listManagedAgentsPaths();
 
   for (const path of managedAgentsPaths) {
     const symlinkError = await ensureManagedPathIsRegularFile(path);
     if (symlinkError !== null) {
       errors.push(symlinkError);
     }
-  }
-
-  if (await fileContainsCrlf(ROOT_MD)) {
-    errors.push(`${ROOT_MD}: must use LF line endings`);
   }
 
   if (mode === "write") {
@@ -361,9 +347,6 @@ async function main() {
     // Semantic check: verify each layer file contains its expected rules
     const agentsFiles = new Map<string, string>();
     for (const [path] of generated) {
-      if (path === ROOT_AGENTS_MD) {
-        continue;
-      } // root checked via byte-exact above
       const file = Bun.file(path);
       if (await file.exists()) {
         agentsFiles.set(path, normalizeNewlines(await file.text()));
